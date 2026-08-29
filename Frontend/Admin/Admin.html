@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TRAMS · Admin Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght=500;700&family=Rajdhani:wght=400;500;600;700&display=swap" rel="stylesheet">
+
+  <link 
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+    <link rel="stylesheet" href="/Admin/admin.css">
+</head>
+<body class="app-loading">
+
+  <div class="loading-screen" id="loadingScreen" aria-live="polite">
+    <div class="loader-card" id="loaderCard">
+
+
+      <div class="loader-mark" aria-hidden="true">
+
+        <!-- OUTER ROTATING RING -->
+        <div class="cyber-ring ring-1"></div>
+
+        <!-- INNER ROTATING RING -->
+        <div class="cyber-ring ring-2"></div>
+
+        <!-- PULSE RING -->
+        <div class="pulse-ring"></div>
+
+        <div class="orbit-track">
+          <span class="orbit-dot"></span>
+          <span class="orbit-dot"></span>
+          <span class="orbit-dot"></span>
+          <span class="orbit-dot"></span>
+        </div>
+        
+        <!-- NAVAL CYBER WARFARE FORCE LOGO -->
+        <div class="loader-logo-wrap">
+
+          <div class="hex-frame"></div>
+          <div class="scan-line"></div>
+
+          <!-- ENERGY PARTICLES -->
+          <span class="energy-particle p1"></span>
+          <span class="energy-particle p2"></span>
+          <span class="energy-particle p3"></span>
+          <span class="energy-particle p4"></span>
+
+          <img
+            src="/Assets/TRAMS_logo.png"
+            alt="Naval Cyber Warfare Force"
+            class="loader-logo"
+          >
+        </div>
+      </div>
+
+      <div class="loader-title">
+        TRAMS ADMIN
+      </div>
+
+      <div class="loader-unit">
+        NAVAL CYBER WARFARE FORCE
+      </div>
+
+      <div class="loader-subtitle">Preparing Admin Portal</div>
+      <div class="loader-progress"><span></span></div>
+    </div>
+  </div>
+
+  <!-- LOGOUT LOADING SCREEN -->
+  <div class="loading-screen logout-loading-screen is-hidden"
+      id="logoutLoadingScreen"
+      aria-live="polite">
+
+    <div class="loader-card logout-loader-card">
+
+      <div class="logout-mark">
+
+        <!-- SPINNING SHIELD -->
+        <div class="logout-shield-ring"></div>
+
+        <!-- WAVE RINGS -->
+        <div class="logout-wave wave-1"></div>
+        <div class="logout-wave wave-2"></div>
+        <div class="logout-wave wave-3"></div>
+
+        <!-- IMAGE -->
+        <div class="logout-logo-wrap">
+
+          <img
+            src="/Assets/TRAMS_logo.png"
+            alt="Admin Logout"
+            class="logout-logo"
+          >
+
+        </div>
+
+      </div>
+
+      <div class="loader-title">
+        LOGGING OUT AS ADMIN
+      </div>
+
+      <div class="loader-unit">
+        TRAMS ADMIN PORTAL
+      </div>
+
+      <div class="loader-subtitle">
+        Securing Session & Saving Changes
+      </div>
+
+      <div class="loader-progress">
+        <span></span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="confirm-overlay" id="logoutConfirm" role="dialog" aria-modal="true" aria-labelledby="logoutConfirmTitle">
+    <div class="confirm-card">
+      <h2 id="logoutConfirmTitle">Confirm Logout</h2>
+      <p>Are you sure you want to log out of TRAMS Admin?</p>
+      <div class="confirm-actions">
+        <button type="button" class="secondary-btn" id="cancelLogoutBtn">Cancel</button>
+        <button type="button" class="primary-btn" id="confirmLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="confirm-overlay"
+    id="cancelAddUserConfirm"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cancelAddUserTitle"
+  >
+
+    <div class="confirm-card">
+
+      <h2 id="cancelAddUserTitle">
+        Cancel Adding User
+      </h2>
+
+      <p>
+        Are you sure you want to cancel adding this user?
+        Unsaved information will be lost.
+      </p>
+
+      <div class="confirm-actions">
+
+        <button
+          type="button"
+          class="secondary-btn"
+          id="keepEditingBtn"
+        >
+          Continue Editing
+        </button>
+
+        <button
+          type="button"
+          class="primary-btn"
+          id="confirmCancelAddUserBtn"
+        >
+          Yes, Cancel
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+
+      <div class="logo">
+          <i class="fas fa-anchor"></i>
+          TRAMS ADMIN
+      </div>
+
+      <div class="top-right">
+         <button class="toggle-sidebar-btn" id="toggleSidebarBtn"
+                  data-tooltip="Toggle the navigation sidebar"
+                  data-tooltip-pos="bottom">
+            <svg class="topbar-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="toggle-sidebar-text">Hide Sidebar</span>
+          </button>
+      </div>
+
+    </div>
+
+    <!-- MAIN -->
+    <div class="main-content">
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+
+        <div>
+          <!-- ADMIN PROFILE (Moved here) -->
+          <div class="admin-profile" id="adminProfileBtn"
+               data-tooltip="Click to edit your admin profile"
+               data-tooltip-pos="bottom">
+            <div class="admin-avatar" id="sidebarAvatar">A</div>
+            <div class="admin-info">
+              <div style="font-weight:700;" id="sidebarName">Name</div>
+              <div style="font-size:13px;color:#8fa8c1;" id="sidebarRole">Administrator</div>
+            </div>
+          </div>
+
+          <div class="sidebar-title">
+            Navigation
+          </div>
+
+          <div class="menu">
+
+            <div class="menu-item active" id="dashboardMenu"
+                 data-tooltip="View attendance overview &amp; stats"
+                 data-tooltip-pos="right">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 13h6v7H4v-7Zm10-9h6v16h-6V4ZM4 4h6v6H4V4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              <span>Dashboard</span>
+            </div>
+
+            <div class="menu-item" id="employeesMenu"
+                 data-tooltip="Manage employee accounts &amp; QR codes"
+                 data-tooltip-pos="right">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M16 19c0-2.2-1.8-4-4-4H8c-2.2 0-4 1.8-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M20 19c0-1.7-1.1-3.1-2.6-3.7M15.5 5.3a3 3 0 0 1 0 5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>Employees</span>
+            </div>
+
+
+            <div class="menu-item" id="reportsMenu"
+                 data-tooltip="View daily, weekly &amp; monthly reports"
+                 data-tooltip-pos="right">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 3h9l3 3v15H6V3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M9 13h6M9 17h6M9 9h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+              <span>Reports</span>
+            </div>
+            <div class="menu-item" id="settingsBtn"
+                 data-tooltip="Accounts &amp; appearance settings"
+                 data-tooltip-pos="right">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 0 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 0 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 0 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 0 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.3 7A2 2 0 0 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 0 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 0 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.1a2 2 0 0 1 0 4H21a1.7 1.7 0 0 0-1.6 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Settings</span>
+            </div>
+
+            <!-- SETTINGS PANEL -->
+            <div class="settings-panel" id="settingsPanel">
+
+              <div class="appearance-field" id="settingsAccountsField"
+                   data-tooltip="Go to Employee Accounts"
+                   data-tooltip-pos="right">
+                <i class="fa-solid fa-users"></i> Accounts
+              </div>
+
+              <div class="appearance-field" id="appearanceField"
+                   data-tooltip="Change dashboard theme"
+                   data-tooltip-pos="right">
+                <i class="fa-solid fa-palette"></i> Appearance
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="logout-btn" id="logoutBtn"
+                data-tooltip="Sign out of TRAMS Admin"
+                data-tooltip-pos="right">
+          
+          <!-- LOGOUT ICON -->
+          <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 17l5-5-5-5v3H3v4h7v3z"/>
+            <path d="M19 3H9c-1.1 0-2 .9-2 2v3h2V5h10v14H9v-3H7v3c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+          <span class="logout-text">Logout</span>
+        </button>
+
+      </div>
+
+      <!-- LARGE THEME SETTINGS PAGE -->
+      <div class="theme-floating-panel" id="themeFloatingPanel">
+
+        <div class="appearance-box">
+
+          <div class="theme-header-box">
+
+            <div class="theme-header">
+              <h2>Appearance Settings</h2>
+              <p>Customize the dashboard appearance and theme.</p>
+            </div>
+
+          </div>         
+
+          <div class="theme-grid">
+
+            <!-- LIGHT MODE -->
+            <div class="theme-card" id="lightThemeCard">
+
+              <div class="theme-preview light-preview">
+
+                <div class="preview-topbar">
+                  <div class="preview-dot"></div>
+                </div>
+
+                <div class="preview-window"></div>
+
+                <div class="preview-screen">
+                  <div class="color-dot red"></div>
+                  <div class="color-dot yellow"></div>
+                  <div class="color-dot green"></div>
+                </div>
+
+              </div>
+
+
+              <div class="mode-boxes">
+
+                <div class="mode-box light-box">
+                  <div class="mode-icon">☀️</div>
+                  <div class="mode-text">Light Mode</div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- DARK MODE -->
+            <div class="theme-card active" id="darkThemeCard">
+
+              <div class="theme-preview dark-preview">
+
+                <div class="preview-topbar">
+                  <div class="preview-dot"></div>
+                </div>
+
+                <div class="preview-window"></div>
+
+                <div class="preview-screen">
+                  <div class="color-dot red"></div>
+                  <div class="color-dot yellow"></div>
+                  <div class="color-dot green"></div>
+                </div>
+
+              </div>
+              
+              <div class="mode-boxes">
+
+                <div class="mode-box dark-box">
+                  <div class="mode-icon">🌙</div>
+                  <div class="mode-text">Dark Mode</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="dashboard" id="dashboardContent">
+
+        <div class="dashboard-header">
+
+          <div>
+            <div class="dashboard-title">
+              Employee Attendance Dashboard
+            </div>
+
+            <div class="dashboard-sub">
+              Monitor employee attendance and activity records
+            </div>
+          </div>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <div class="stat-title">Total Employees</div>
+            <div class="stat-value" id="totalEmployeesStat">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-title">Present Today</div>
+            <div class="stat-value" id="presentTodayStat">0</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-title">Departments</div>
+            <div class="stat-value" id="departmentsStat">0</div>
+          </div>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-container full-page-panel" id="userAccountsPanel">
+
+          <div class="table-header">
+            <div class="table-title">
+              Employee Attendance Logs
+            </div>
+            <div class="table-tools" style="margin-bottom:0;">
+              <select id="attendanceDepartmentFilter"
+                      data-tooltip="Filter logs by department">
+                <option value="">Select Department</option>
+              </select>
+              <input id="attendanceDateFilter" type="date"
+                     data-tooltip="Filter logs by date">
+            </div>
+          </div>
+
+          <table style="min-height:30px;">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Employee Name</th>
+                <th>Time In</th>
+                <th>Time Out</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceLogBody"><tr><td colspan="5" class="employee-empty">No attendance scans yet.</td></tr></tbody>
+          </table>
+          <div class="table-pagination">
+            <button id="attendancePrevPageBtn" class="page-btn"
+                    data-tooltip="Go to previous page">Previous</button>
+            <div class="page-center">
+              <span>Page</span>
+              <input type="number" id="attendancePageInput" value="1" min="1">
+              <span id="attendancePageCountText">of 1</span>
+              <select id="attendanceRowsPerPage">
+                <option value="10">10 rows</option>
+                <option value="20">20 rows</option>
+                <option value="50">50 rows</option>
+              </select>
+            </div>
+            <button id="attendanceNextPageBtn" class="page-btn"
+                    data-tooltip="Go to next page">Next</button>
+          </div>
+          
+        </div>
+
+      </div>
+
+
+      <!-- REPORTS -->
+      <div class="dashboard reports-page" id="reportsContent">
+        <div class="dashboard-header">
+          <div>
+            <div class="dashboard-title">Attendance Reports</div>
+            <div class="dashboard-sub">Daily, weekly, and monthly attendance summaries for assigned department</div>
+          </div>
+        </div>
+        <div class="report-actions">
+          <select id="reportTrendFilter"
+                  data-tooltip="Change the report time period">
+            <option value="daily">Daily Trend</option>
+            <option value="weekly">Weekly Trend</option>
+            <option value="monthly">Monthly Trend</option>
+          </select>
+          <button class="primary-btn" id="exportAdminReportPdf" type="button"
+                  data-tooltip="Download attendance report as PDF">Export PDF</button>
+        </div>
+        <div class="report-summary">
+          <div class="report-box"><span>Total Logs</span><strong id="reportTotalLogs">0</strong></div>
+          <div class="report-box"><span>Time In</span><strong id="reportTimeIn">0</strong></div>
+          <div class="report-box"><span>Time Out</span><strong id="reportTimeOut">0</strong></div>
+        </div>
+        <div class="chart-grid">
+          <section class="chart-card wide">
+            <div class="chart-head"><div class="chart-title">Logs Trend Distribution</div></div>
+            <canvas id="adminHistogramChart"></canvas>
+            <div class="chart-insight" id="adminHistogramInsight"></div>
+          </section>
+          <section class="chart-card wide">
+            <div class="chart-head"><div class="chart-title">Attendance Trend</div></div>
+            <canvas id="adminLineChart"></canvas>
+            <div class="chart-insight" id="adminLineInsight"></div>
+          </section>
+        </div>
+      </div>
+      <!-- EMPLOYEES -->
+      <div class="dashboard employee-page" id="employeeContent">
+
+        <div class="dashboard-header">
+          <div>
+            <div class="dashboard-title">
+              Employee Accounts
+            </div>
+
+            <div class="dashboard-sub">
+              View users, add employee accounts, manage QR codes, photos, and account status
+            </div>
+          </div>
+        </div>
+
+        <div class="employee-layout">
+
+          <div class="employee-panel full-page-panel" id="addUserPanel" style="display:none;">
+
+            <!-- ADD USER PAGE HEADER -->
+            <div class="dashboard-header"
+              style="
+                margin-bottom:20px;
+                display:flex;
+                justify-content:space-between;
+                align-items:flex-start;
+                gap:20px;
+              ">
+
+            <!-- LEFT SIDE -->
+            <div>
+              <div class="dashboard-title" id="employeeFormTitle">
+                Add New User
+              </div>
+
+              <div class="dashboard-sub">
+                Create a new employee account and generate QR credentials
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE PHOTO PANEL -->
+            <div
+              style="
+                display:flex;
+                align-items:center;
+                gap:12px;
+                flex-shrink:0;
+              "
+            >
+
+              <button
+                type="button"
+                class="primary-btn"
+                onclick="document.getElementById('employeePhoto').click();"
+                data-tooltip="Upload a profile photo for this employee"
+              >
+                Upload Photo
+              </button>
+
+              <div
+                class="photo-preview"
+                id="photoPreview"
+                style="
+                  width:110px;
+                  height:110px;
+                "
+              >
+                Photo
+              </div>
+
+            </div>
+          </div>
+
+
+            <form class="employee-form" id="employeeForm">
+              <input type="hidden" id="employeeId">
+
+              <div class="rank-service-department-row">
+                  <div class="form-group rank-field">
+                    <label for="rank">Rank *</label>
+                    <select id="rank" required>
+                      <option value="">Select Rank</option>
+                      <option>Civilian Employee</option>
+                      <option>ASN</option>
+                      <option>SN2</option>
+                      <option>SN1</option>
+                      <option>PO3</option>
+                      <option>PO2</option>
+                      <option>PO1</option>
+                      <option>CPO</option>
+                      <option>SCPO</option>
+                      <option>MCPO</option>
+                      <option>ENS</option>
+                      <option>LTJG</option>
+                      <option>LT</option>
+                      <option>LCDR</option>
+                      <option>CDR</option>
+                      <option>CAPT</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group service-field">
+                    <label for="service">Service *</label>
+                    <select id="service" required>
+                      <option value="">Select Service</option>
+                      <option>PN</option>
+                      <option>PN (M)</option>
+                      <option>CHR</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group department-field">
+                    <label for="department">Department</label>
+                    <select id="department">
+                      <option value="">Select Department</option>
+                      <option value="Personnel Information System (PIS)">Personnel Information System (PIS)</option>
+                      <option value="Software Development / Support">Software Development / Support</option>
+                      <option value="Hardware Support Unit">Hardware Support Unit</option>
+                      <option value="Account Management">Account Management</option>
+                      <option value="IT Maintenance Team">IT Maintenance Team</option>
+                      <option value="General IT Helpdesk">General IT Helpdesk</option>
+                      <option value="Cybersecurity Division">Cybersecurity Division</option>
+                    </select>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" required>
+              </div>
+
+              <div class="form-group">
+                <label for="middleName">Middle Initial *</label>
+                <input type="text" id="middleName" required>
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" required>
+              </div>
+
+              <div class="form-group">
+                <label for="serialNumber">Serial Number *</label>
+                <input type="text" id="serialNumber" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contactNumber">Contact Number *</label>
+                <input type="tel" id="contactNumber" required>
+              </div>
+
+              <div class="form-group">
+                <label for="emailAddress">Email Address *</label>
+                <input type="email" id="emailAddress" required>
+              </div>
+
+              <div class="form-group full">
+                <div style="
+                display:flex;
+                gap:20px;
+                align-items:flex-end;
+                justify-content:flex-end;
+                flex-wrap:wrap;
+                width:100%;
+              "> 
+                <input
+                  type="file"
+                  id="employeePhoto"
+                  accept="image/*"
+                  style="display:none;"
+                >
+                  <button
+                    type="button"
+                    class="secondary-btn"
+                    id="cancelAddUserBtn"
+                    data-tooltip="Discard and go back to user list"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="primary-btn"
+                    id="saveEmployeeBtn"
+                    data-tooltip="Save and create this employee account"
+                  >
+                    Create User
+                  </button>
+
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="table-container" id="userAccountsTablePanel">
+            <div class="table-header">
+              
+              <div class="table-title">
+                User Accounts
+              </div>
+
+              <!-- BUTTON GROUP -->
+              <div style="display:flex;align-items:center;gap:8px;">
+
+                <button class="primary-btn" id="showAddUserBtn"
+                        data-tooltip="Create a new employee account">
+                  + Add New User
+                </button>
+
+                <button class="sync-records-btn" id="syncRecordsBtn"
+                        data-tooltip="Refresh employee records from server">
+                  <i class="fa-solid fa-rotate sync-icon"></i>
+                  <span class="sync-text">Sync Records</span>
+                </button>
+
+              </div>
+            </div>
+
+            <div class="employee-toolbar">
+              <input class="search-control" type="search" id="employeeSearch"
+                     placeholder="Search by employee name"
+                     data-tooltip="Search employees by name">
+              <select id="employeeDepartmentFilter" class="dept-filter-compact"
+                      data-tooltip="Filter by department">
+                <option value="">Select Department</option>
+              </select>
+            </div>
+
+            <div class="table-scroll">
+              <table class="employee-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Serial No.</th>
+                    <th>Email</th>
+                    <th>QR Code</th>
+                    <th>Department</th>
+                  </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                  <tr>
+                    <td class="employee-empty" colspan="6">No employee accounts yet.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-pagination">
+
+              <button id="prevPageBtn" class="page-btn"
+                      data-tooltip="Go to previous page">
+                Previous
+              </button>
+
+              <div class="page-center">
+
+                <span>Page</span>
+
+                <input
+                  type="number"
+                  id="pageNumberInput"
+                  value="1"
+                  min="1"
+                >
+
+                <span id="pageCountText">of 1</span>
+
+                <select id="rowsPerPage">
+                  <option value="10">10 rows</option>
+                  <option value="20">20 rows</option>
+                  <option value="30">30 rows</option>
+                  <option value="50">50 rows</option>
+                </select>
+
+              </div>
+
+              <button id="nextPageBtn" class="page-btn"
+                      data-tooltip="Go to next page">
+                Next
+              </button>
+
+            </div>
+
+            <div class="employee-detail-panel" id="employeeDetailPanel" aria-live="polite"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+      TRAMS Attendance Monitoring System © 2026
+    </div>
+
+  </div>
+
+  <script src="/Admin/admin.js"></script>
+</body>
+</html>

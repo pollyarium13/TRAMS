@@ -1,0 +1,897 @@
+:root{
+      --navy-deep:#04111f;
+      --navy-dark:#081a2e;
+      --navy-mid:#0b2340;
+      --navy-light:#123a6b;
+      --accent:#00c8ff;
+      --accent-dim:rgba(0,200,255,0.15);
+      --accent-glow:rgba(0,200,255,0.4);
+      --gold:#c8960c;
+      --gold-light:#f0b429;
+      --gold-dim:rgba(200,150,12,0.15);
+      --danger:#ff3b3b;
+      --white:#e8f4ff;
+      --muted:rgba(232,244,255,0.5);
+      --panel:#ffffff;
+      --panel-text:#0b2340;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:var(--navy-deep);
+      color:var(--white);
+      font-family:'Rajdhani',sans-serif;
+      overflow:hidden;
+      min-height:100vh;
+    }
+
+    /* â”€â”€ SCANLINE OVERLAY â”€â”€ */
+    body::after{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events:none;
+      z-index:9999;
+    }
+
+    /* â”€â”€ NAVBAR â”€â”€ */
+    .navbar{
+      width:100%;
+      height:70px;
+      background:var(--navy-deep);
+      display:flex;
+      align-items:center;
+      padding:0 30px;
+      border-bottom:1px solid rgba(0,200,255,0.2);
+      position:relative;
+      z-index:100;
+      animation:fadeDown 0.8s ease;
+    }
+
+    /* animated accent line on navbar bottom */
+    .navbar::after{
+      content:'';
+      position:absolute;
+      bottom:0; left:0;
+      height:2px;
+      width:100%;
+      background:linear-gradient(90deg,transparent,var(--accent),var(--gold),var(--accent),transparent);
+      animation:scanLine 4s linear infinite;
+    }
+
+    @keyframes scanLine{
+      0%{background-position:-200% 0;}
+      100%{background-position:200% 0;}
+    }
+
+    .navbar-logo{
+      height:50px;
+      width:50px;
+      border-radius:50%;
+      object-fit:cover;
+      margin-right:14px;
+      flex-shrink:0;
+      border:2px solid var(--accent);
+      box-shadow:0 0 12px var(--accent-glow);
+      animation:logoPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse{
+      0%,100%{box-shadow:0 0 10px var(--accent-glow);}
+      50%{box-shadow:0 0 22px var(--accent-glow), 0 0 40px rgba(0,200,255,0.15);}
+    }
+
+    .navbar-title-wrap{
+      display:flex;
+      flex-direction:column;
+      gap:1px;
+    }
+
+    .navbar h2{
+      font-family:'Orbitron',sans-serif;
+      font-size:16px;
+      font-weight:700;
+      letter-spacing:3px;
+      color:var(--white);
+      text-transform:uppercase;
+    }
+
+    .navbar-sub{
+      font-family:'Share Tech Mono',monospace;
+      font-size:10px;
+      color:var(--accent);
+      letter-spacing:2px;
+      opacity:0.8;
+    }
+
+    /* live clock on the right */
+    .navbar-right{
+      margin-left:auto;
+      display:flex;
+      align-items:center;
+      gap:20px;
+    }
+
+    .nav-clock{
+      font-family:'Share Tech Mono',monospace;
+      font-size:13px;
+      color:var(--accent);
+      letter-spacing:2px;
+      opacity:0.85;
+    }
+
+    .nav-status{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-family:'Rajdhani',sans-serif;
+      font-size:12px;
+      font-weight:600;
+      color:var(--muted);
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .status-dot{
+      width:7px;height:7px;
+      border-radius:50%;
+      background:#00ff88;
+      animation:blink 1.4s ease-in-out infinite;
+    }
+
+    @keyframes blink{
+      0%,100%{opacity:1;}
+      50%{opacity:0.2;}
+    }
+
+    /* â”€â”€ BOTTOM BAR â”€â”€ */
+    .bottom-bar{
+      width:100%;
+      height:50px;
+      background:var(--navy-deep);
+      border-top:1px solid rgba(0,200,255,0.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .bottom-bar::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:2px;
+      background:linear-gradient(
+        90deg,
+        transparent,
+        var(--accent),
+        var(--gold),
+        var(--accent),
+        transparent
+      );
+      animation:scanLine 4s linear infinite;
+    }
+
+    .bottom-bar-text{
+      font-family:'Share Tech Mono', monospace;
+      font-size:11px;
+      letter-spacing:2px;
+      color:var(--accent);
+      opacity:0.85;
+      text-transform:uppercase;
+    }
+
+    /* â”€â”€ CONTAINER â”€â”€ */
+    .container{
+      display:flex;
+      flex-wrap:wrap;
+      height:calc(100vh - 120px);
+      width:100%;
+    }
+
+    /* â”€â”€ LEFT PANEL â”€â”€ */
+    .left{
+      width:75%;
+      background:linear-gradient(160deg,var(--navy-deep) 0%,var(--navy-mid) 60%,#0a2a50 100%);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px 30px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* hex grid background */
+    .left::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(0,200,255,0.06) 1px, transparent 0);
+      background-size:32px 32px;
+      animation:gridDrift 25s linear infinite;
+      pointer-events:none;
+    }
+
+    /* corner bracket decorations */
+    .left::after{
+      content:'';
+      position:absolute;
+      top:20px; 
+      left:20px;
+      width:40px; 
+      height:40px;
+      border-top:2px solid var(--accent);
+      border-left:2px solid var(--accent);
+      opacity:0.5;
+      pointer-events:none;
+    }
+
+    @keyframes gridDrift{
+      from{transform:translate(0,0);}
+      to{transform:translate(-32px,-32px);}
+    }
+
+    /* â”€â”€ GALLERY â”€â”€ */
+    .gallery{
+      width:100%;
+      max-width:880px;
+      height:330px;
+      overflow:hidden;
+      border-radius:4px;
+      position:relative;
+      border:1px solid rgba(0,200,255,0.25);
+      box-shadow:0 0 40px rgba(0,200,255,0.08), inset 0 0 60px rgba(0,0,0,0.3);
+    }
+
+    /* HUD corners on gallery */
+    .gallery::before,.gallery::after{
+      content:'';
+      position:absolute;
+      width:20px; height:20px;
+      z-index:5;
+      pointer-events:none;
+    }
+    .gallery::before{
+      top:8px; left:8px;
+      border-top:2px solid var(--accent);
+      border-left:2px solid var(--accent);
+    }
+    .gallery::after{
+      bottom:8px; right:8px;
+      border-bottom:2px solid var(--gold);
+      border-right:2px solid var(--gold);
+    }
+
+    .gallery:hover{
+      border-color:rgba(0,200,255,0.5);
+      box-shadow:0 0 60px rgba(0,200,255,0.15);
+      transition:0.4s;
+    }
+
+    .gallery-track{
+      display:flex;
+      height:100%;
+      width:100%;
+      transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .gallery-track img{
+      width:100%;
+      min-width:100%;
+      height:100%;
+      object-fit:cover;
+      flex-shrink:0;
+      filter:brightness(0.85) saturate(0.9);
+    }
+
+    /* scan overlay on gallery */
+    .gallery-scan{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,
+        transparent 0%,
+        rgba(0,200,255,0.03) 50%,
+        transparent 100%
+      );
+      animation:scanV 3s ease-in-out infinite;
+      pointer-events:none;
+      z-index:2;
+    }
+
+    @keyframes scanV{
+      0%,100%{opacity:0.4;}
+      50%{opacity:1;}
+    }
+
+    /* gallery label */
+    .gallery-label{
+      position:absolute;
+      top:12px; right:16px;
+      font-family:'Share Tech Mono',monospace;
+      font-size:10px;
+      color:var(--accent);
+      letter-spacing:2px;
+      opacity:0.8;
+      z-index:4;
+    }
+
+    .gallery-dots{
+      position:absolute;
+      bottom:14px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:8px;
+      z-index:4;
+    }
+
+    .gallery-dots span{
+      width:6px; height:6px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.3);
+      cursor:pointer;
+      transition:0.3s;
+      border:1px solid rgba(0,200,255,0.4);
+    }
+
+    .gallery-dots span.active{
+      background:var(--accent);
+      border-color:var(--accent);
+      box-shadow:0 0 8px var(--accent-glow);
+      transform:scale(1.3);
+    }
+
+    /* â”€â”€ LEFT INFO â”€â”€ */
+    .left-info{
+      margin-top:12px;
+      max-width:700px;
+      position:relative;
+      z-index:1;
+    }
+
+    .left-info h2{
+      font-family:'Orbitron',sans-serif;
+      font-size:20px;
+      font-weight:700;
+      letter-spacing:4px;
+      color:var(--white);
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+
+    .left-info p{
+      font-size:17px;
+      font-weight:500;
+      color:#d6e8ff;
+      line-height:1.7;
+      letter-spacing:0.6px;
+    }
+
+    /* â”€â”€ RIGHT PANEL â”€â”€ */
+    .right{
+      width:25%;
+      background:linear-gradient(180deg,#f0f4f8 0%,#e8eef5 100%);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:30px;
+      padding:18px;
+      position:relative;
+      border-left:1px solid rgba(0,200,255,0.2);
+      min-height:calc(100vh - 120px);
+    }
+
+    /* vertical accent line on right panel */
+    .right::before{
+      content:'';
+      position:absolute;
+      left:0; top:10%; bottom:10%;
+      width:2px;
+      background:linear-gradient(180deg,transparent,var(--accent),var(--gold),var(--accent),transparent);
+      opacity:0.4;
+    }
+
+    /* â”€â”€ CLASSIFICATION BADGE â”€â”€ */
+    .classification{
+      width:100%;
+      text-align:center;
+      font-family:'Share Tech Mono',monospace;
+      font-size:9px;
+      letter-spacing:3px;
+      color:#cc3333;
+      border:1px solid rgba(204,51,51,0.3);
+      border-radius:2px;
+      padding:4px 8px;
+      margin-bottom:18px;
+      text-transform:uppercase;
+      background:rgba(204,51,51,0.05);
+    }
+
+    /* â”€â”€ LOGIN CARD â”€â”€ */
+    .card{
+      width:100%;
+      max-width:320px;
+      background:#fff;
+      padding:28px 22px;
+      border-radius:2px;
+      color:var(--panel-text);
+      position:relative;
+      border:1px solid rgba(11,35,64,0.12);
+      box-shadow:0 4px 24px rgba(11,35,64,0.12);
+      overflow:visible;
+    }
+
+    /* card corner accents */
+    .card::before,.card::after{
+      content:'';
+      position:absolute;
+      width:14px; height:14px;
+    }
+    .card::before{
+      top:-1px; left:-1px;
+      border-top:2px solid var(--navy-light);
+      border-left:2px solid var(--navy-light);
+    }
+    .card::after{
+      bottom:-1px; right:-1px;
+      border-bottom:2px solid var(--gold);
+      border-right:2px solid var(--gold);
+    }
+
+    /* card header */
+    .card-header-wrap{
+      text-align:center;
+      margin-bottom:20px;
+      padding-bottom:16px;
+      border-bottom:1px solid rgba(11,35,64,0.08);
+      position:relative;
+    }
+
+    .card-eyebrow{
+      font-family:'Share Tech Mono',monospace;
+      font-size:9px;
+      letter-spacing:3px;
+      color:var(--navy-light);
+      text-transform:uppercase;
+      opacity:0.6;
+      margin-bottom:4px;
+    }
+
+    .card-title{
+      font-family:'Orbitron',sans-serif;
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:2px;
+      color:var(--navy-deep);
+      text-transform:uppercase;
+    }
+
+    .card-title-accent{
+      display:block;
+      height:2px;
+      width:40px;
+      margin:8px auto 0;
+      background:linear-gradient(90deg,var(--navy-light),var(--accent));
+      border-radius:2px;
+    }
+
+    /* â”€â”€ FIELD LABELS â”€â”€ */
+    .field-wrap{
+      margin-bottom:14px;
+      overflow:visible;
+      position:relative;
+    }
+
+    .field-label{
+      display:inline-block;
+      font-family:'Share Tech Mono',monospace;
+      font-size:11px;
+      letter-spacing:2px;
+      color:#08203d;
+      text-transform:uppercase;
+      margin-bottom:6px;
+      opacity:1;
+      font-weight:700;
+    }
+
+    input{
+      width:100%;
+      padding:11px 13px;
+      border:1px solid rgba(11,35,64,0.25);
+      border-radius:2px;
+      font-family:'Rajdhani',sans-serif;
+      font-size:16px;
+      font-weight:600;
+      color:#04111f;
+      background:#f8fafc;
+      transition:border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      letter-spacing:0.6px;
+        }
+
+    input:focus{
+      outline:none;
+      border-color:var(--navy-light);
+      background:#fff;
+      box-shadow:0 0 0 3px rgba(18,58,107,0.08);
+    }
+
+    input::placeholder{
+      color:rgba(11,35,64,0.55);
+      font-weight:500;
+    }
+
+    /* â”€â”€ PASSWORD WRAP â”€â”€ */
+    .passwordWrap{
+      position:relative;
+      display:block;
+      line-height:0;
+      font-size:0;
+    }
+
+    .passwordWrap input{
+      padding-right:44px;
+      display:block;
+      width:100%;
+      line-height:normal;
+      font-size:16px;
+    }
+
+    /* Wrapper span carries the tooltip — absolutely positioned like the old button,
+       so tooltip pseudo-elements are scoped to it without fighting button layout */
+    .eyeBtn-wrap{
+      position:absolute !important;
+      right:8px;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex !important;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      line-height:0;
+      font-size:0;
+    }
+
+    .eyeBtn{
+      position:static;
+      border:none;
+      background:transparent;
+      color:var(--navy-light);
+      cursor:pointer;
+      width:28px; height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0; padding:0;
+      border-radius:2px;
+      transition:background 0.2s;
+    }
+
+    .eyeBtn:hover{
+      background:rgba(18,58,107,0.08);
+    }
+
+    /* â”€â”€ LOGIN BUTTON â”€â”€ */
+    .login-btn{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:2px;
+      background:var(--navy-deep);
+      color:var(--white);
+      cursor:pointer;
+      font-family:'Orbitron',sans-serif;
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      margin-top:6px;
+      position:relative;
+      overflow:hidden;
+      transition:background 0.2s, box-shadow 0.2s;
+    }
+
+    .login-btn::before{
+      content:'';
+      position:absolute;
+      top:0; left:-100%;
+      width:100%; height:100%;
+      background:linear-gradient(90deg,transparent,rgba(0,200,255,0.15),transparent);
+      transition:left 0.5s;
+    }
+
+    .login-btn:hover{
+      background:#0a2240;
+      box-shadow:0 0 20px rgba(0,200,255,0.2);
+    }
+
+    .login-btn:hover::before{
+      left:100%;
+    }
+
+    .login-btn:active{
+      transform:scale(0.98);
+    }
+
+    /* loading state */
+    .login-btn.loading{
+      pointer-events:none;
+      opacity:0.7;
+    }
+
+    /* â”€â”€ DIVIDER â”€â”€ */
+    .card-divider{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:16px 0 12px;
+    }
+
+    .card-divider hr{
+      flex:1;
+      border:none;
+      border-top:1px solid rgba(11,35,64,0.1);
+    }
+
+    .card-divider span{
+      font-family:'Share Tech Mono',monospace;
+      font-size:9px;
+      color:rgba(11,35,64,0.3);
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    /* â”€â”€ SECURE BADGE â”€â”€ */
+    .secure-badge{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid rgba(11,35,64,0.08);
+    }
+
+    .secure-badge svg{
+      width:12px; height:12px;
+      color:var(--navy-light);
+      opacity:0.5;
+    }
+
+    .secure-badge span{
+      font-family:'Share Tech Mono',monospace;
+      font-size:9px;
+      color:rgba(11,35,64,0.4);
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    /* â”€â”€ ANIMATIONS â”€â”€ */
+    @keyframes fadeDown{
+      from{opacity:0;transform:translateY(-20px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(16px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    /* â”€â”€ MOBILE â”€â”€ */
+    @media (max-width: 1024px){
+      .gallery{ height:320px; }
+    }
+
+    @media (max-width: 768px){
+      body{ overflow-y:auto; }
+
+      .container{
+        flex-direction:column;
+        height:auto;
+        min-height: calc(100vh - 120px);
+      }
+
+      .left{
+        width:100%;
+        height:auto;
+        padding:24px 16px;
+      }
+
+      .gallery{
+        height:220px;
+        max-width:100%;
+      }
+
+      .right{
+        width:100%;
+        min-height:unset;
+        padding:20px 16px;
+        background:linear-gradient(180deg,#f0f4f8,#e8eef5);
+        border-left:none;
+        border-top:1px solid rgba(0,200,255,0.15);
+        align-self:auto;
+      }
+
+      .right::before{ display:none; }
+
+      .card{
+        max-width:100%;
+        border-radius:2px;
+      }
+
+      .left-info h2{ font-size:16px; }
+
+      .stat-row{ gap:8px; }
+
+      .navbar-sub{ display:none; }
+
+      .nav-status{ display:none; }
+
+      .nav-clock{ font-size:11px; }
+
+      .classification{ font-size:8px; }
+    }
+
+    @media (max-width: 480px){
+      .gallery{ height:175px; }
+      .stat-chip{ min-width:64px; padding:5px 10px; }
+      .stat-chip-val{ font-size:15px; }
+    }
+
+    /* â”€â”€ PARTICLE CANVAS â”€â”€ */
+    #particleCanvas{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      opacity:0.5;
+    }
+
+    /* ensure content above canvas */
+    .gallery, .left-info, .corner-br{
+      position:relative;
+      z-index:1;
+    }
+
+    /* ── TOOLTIPS ── */
+    [data-tooltip]{
+      position:relative;
+    }
+
+    [data-tooltip]::before,
+    [data-tooltip]::after{
+      pointer-events:none;
+      opacity:0;
+      transform:translateY(4px);
+      transition:opacity 0.2s ease, transform 0.2s ease;
+      z-index:10000;
+    }
+
+    /* bubble */
+    [data-tooltip]::after{
+      content: attr(data-tooltip);
+      position:absolute;
+      bottom:calc(100% + 10px);
+      left:50%;
+      transform:translateX(-50%) translateY(4px);
+      white-space:nowrap;
+      background:rgba(4,17,31,0.97);
+      color:var(--accent);
+      font-family:'Share Tech Mono',monospace;
+      font-size:10px;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      padding:6px 11px;
+      border-radius:2px;
+      border:1px solid rgba(0,200,255,0.35);
+      box-shadow:0 0 12px rgba(0,200,255,0.2), 0 4px 16px rgba(0,0,0,0.5);
+    }
+
+    /* arrow */
+    [data-tooltip]::before{
+      content:'';
+      position:absolute;
+      bottom:calc(100% + 4px);
+      left:50%;
+      transform:translateX(-50%) translateY(4px);
+      border:5px solid transparent;
+      border-top-color:rgba(0,200,255,0.35);
+    }
+
+    [data-tooltip]:hover::after,
+    [data-tooltip]:hover::before{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    [data-tooltip]:hover::before{
+      transform:translateX(-50%) translateY(0);
+    }
+
+    /* Tooltip anchored to bottom (for navbar items) */
+    [data-tooltip-pos="bottom"]::after{
+      top:calc(100% + 10px);
+      bottom:auto;
+      transform:translateX(-50%) translateY(-4px);
+    }
+    [data-tooltip-pos="bottom"]::before{
+      top:calc(100% + 4px);
+      bottom:auto;
+      border-top-color:transparent;
+      border-bottom-color:rgba(0,200,255,0.35);
+      transform:translateX(-50%) translateY(-4px);
+    }
+    [data-tooltip-pos="bottom"]:hover::after,
+    [data-tooltip-pos="bottom"]:hover::before{
+      transform:translateX(-50%) translateY(0);
+    }
+
+    /* Tooltip anchored to the right (for left-edge items) */
+    [data-tooltip-pos="right"]::after{
+      left:calc(100% + 10px);
+      bottom:auto;
+      top:50%;
+      transform:translateY(-50%) translateX(-4px);
+    }
+    [data-tooltip-pos="right"]::before{
+      left:calc(100% + 4px);
+      bottom:auto;
+      top:50%;
+      border-top-color:transparent;
+      border-right-color:rgba(0,200,255,0.35);
+      transform:translateY(-50%) translateX(-4px);
+    }
+    [data-tooltip-pos="right"]:hover::after,
+    [data-tooltip-pos="right"]:hover::before{
+      transform:translateY(-50%) translateX(0);
+    }
+
+    /* Tooltip anchored to the left (for right-edge items) */
+    [data-tooltip-pos="left"]::after{
+      right:calc(100% + 10px);
+      left:auto;
+      bottom:auto;
+      top:50%;
+      transform:translateY(-50%) translateX(4px);
+    }
+    [data-tooltip-pos="left"]::before{
+      right:calc(100% + 4px);
+      left:auto;
+      bottom:auto;
+      top:50%;
+      border-top-color:transparent;
+      border-left-color:rgba(0,200,255,0.35);
+      transform:translateY(-50%) translateX(4px);
+    }
+    [data-tooltip-pos="left"]:hover::after,
+    [data-tooltip-pos="left"]:hover::before{
+      transform:translateY(-50%) translateX(0);
+    }
+
+    /* Inside white card — dark tooltip text on light bubble */
+    .card [data-tooltip]::after{
+      background:rgba(4,17,31,0.95);
+      color:var(--accent);
+    }
+
+    /* Wider tooltip for multi-word hints */
+    [data-tooltip-wide]::after{
+      white-space:normal;
+      width:180px;
+      text-align:center;
+      left:50%;
+    }

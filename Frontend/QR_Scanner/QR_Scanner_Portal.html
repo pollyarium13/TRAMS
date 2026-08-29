@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+  <title>TRAMS · QR Scanner Portal</title>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <link rel="stylesheet" href="/QR_Scanner/qr_scanner.css">
+</head>
+<body>
+
+  <nav class="top-nav">
+    <!-- LEFT SIDE -->
+    <div class="nav-brand">
+      <span></span>
+      Troops Attendance & Monitoring System
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="nav-right">
+      
+      <!-- Navy Logo -->
+      <img 
+        src="/Assets/TRAMS_QR.jpg" 
+        alt="Philippine Navy Logo" 
+        class="nav-logo"
+        data-tooltip="TRAMS — Troops Attendance & Monitoring System"
+        data-tooltip-pos="bottom"
+      >
+    </div>
+  </nav>
+
+  <div class="scanner-card">
+    <h1>Online Attendance</h1>
+    <div class="subtitle">QR Scanner Portal</div>
+
+    <div class="scan-area">
+      <div class="scanner-layout">
+        <div class="reader-wrapper"
+             data-tooltip="Point your QR code at the camera to scan"
+             data-tooltip-pos="bottom">
+          <div id="reader">
+            <p style="color: white; text-align: center; padding: 2rem;">Starting camera...</p>
+          </div>
+        </div>
+        
+        <div class="side-controls">
+          <button class="navy-btn" id="restartScannerBtn" style="display: none;"
+                  data-tooltip="Re-initialize the camera feed">Restart Camera</button>
+          <button class="navy-btn danger" id="stopScannerBtn" style="display: none;"
+                  data-tooltip="Turn off the camera scanner">Stop Camera</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="scanFeedback" style="display: none;" class="log-feedback"></div>
+    
+    <div id="lastScanDisplay" class="last-scan-info" style="display: none;"
+         data-tooltip="Most recently scanned personnel">
+      <span id="lastScanText"></span>
+    </div>
+    <div id="scanToast" class="scan-toast"></div>
+
+  </div>
+
+  <script src="/QR_Scanner/qr_scanner.js"></script>
+
+  <!-- Bottom Time Bar -->
+  <div class="bottom-bar">
+    <span id="dateTimeDisplay"></span>
+  </div>
+</body>
+</html>
